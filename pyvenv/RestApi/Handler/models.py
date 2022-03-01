@@ -4,8 +4,8 @@ from django.db import models
 # Declaration index matters !
 
 class Author (models.Model):
-    name = models.CharField(verbose_name="name", max_length=40)
-    surname = models.CharField(verbose_name="surname", max_length=40)
+    name = models.CharField(verbose_name="name", max_length=20)
+    surname = models.CharField(verbose_name="surname", max_length=20)
 
     def __str__(self) -> str:
         return "%s %s" %(self.name, self.surname)
