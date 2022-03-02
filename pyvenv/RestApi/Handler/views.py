@@ -1,10 +1,11 @@
 from distutils.log import error
 from typing import Dict
+from urllib import response
 from django.http import JsonResponse, HttpResponse
 import datetime
 import random
-import string
 from .models import Quote, Author, QuoteBank, State
+from . import imagerun as imgr
 
 def SetDynamicUrl() -> str:
     state = State.objects.get()
@@ -75,7 +76,22 @@ def ShareView(request, shareurl, raw=False):
         
 def SSIMView(request, shareurl = False):
     if shareurl:
-        pass
+        try:
+            if imgr.ImageGet(shareurl):
+                dlink = "static/%s.jpg" %shareurl
+               
+            else: 
+                QB = ShareView(request, shareurl=shareurl, raw=True)
+                dlink = imgr.ImageRun(QB["day"],QB["quote"], QB["author"], QB["shareurl"]) 
+                
+            return JsonResponse({"downloadlink" : dlink}, headers= {
+                    "Access-Control-Allow-Origin" : "*",
+                    "Access-Control-Allow-Credentials" : "true",
+                    "Access-Control-Allow-Methods" : "GET",
+                    "Access-Control-Allow-Headers" : "Origin, Content-Type, Accept"    
+            })
+        except:
+            return HttpResponse(status = 500)
     else:
-        pass
+        return HttpResponse(status = 404)
     

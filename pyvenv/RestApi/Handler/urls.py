@@ -3,6 +3,5 @@ from .views import DailyView, ShareView, SSIMView
 urlpatterns = [
   path("", DailyView),
   path("<slug:shareurl>/", ShareView),
-  path("share/", SSIMView),
-  path("share/<slug:shareurl>", SSIMView)
+  path("ssim/<slug:shareurl>", SSIMView),
 ]
