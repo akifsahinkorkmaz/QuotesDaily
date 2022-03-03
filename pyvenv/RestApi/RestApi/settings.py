@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-from logging import Handler
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "corsheaders", # cors headers
     "Handler",  # db & view handler 
+]
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 MIDDLEWARE = [
@@ -116,10 +120,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-STATICFILES_DIRS = [
-    ("generated", BASE_DIR.parent / "static",)
-]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
