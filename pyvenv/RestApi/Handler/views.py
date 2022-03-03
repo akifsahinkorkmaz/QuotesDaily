@@ -79,11 +79,9 @@ def SSIMView(request, shareurl = False):
         try:
             if imgr.ImageGet(shareurl):
                 dlink = "static/%s.jpg" %shareurl
-               
             else: 
                 QB = ShareView(request, shareurl=shareurl, raw=True)
-                dlink = imgr.ImageRun(QB["day"],QB["quote"], QB["author"], QB["shareurl"]) 
-                
+                dlink = imgr.ImageRun(QB["day"],QB["quote"], QB["author"].__str__(), QB["shareurl"]) 
             return JsonResponse({"downloadlink" : dlink}, headers= {
                     "Access-Control-Allow-Origin" : "*",
                     "Access-Control-Allow-Credentials" : "true",
