@@ -41,6 +41,7 @@ def DailyView(request, raw = False) -> Dict:
         "quote": DailyQuote.fQuote.quote,
         "author": DailyQuote.fQuote.Author.__str__(),
         "day": DailyQuote.day,
+        "bg": DailyQuote.fQuote.Background,
         "shareurl": DailyQuote.surl
     }
     if raw:
@@ -60,6 +61,7 @@ def ShareView(request, shareurl, raw=False):
             "quote": DailyQuote.fQuote.quote,
             "author": DailyQuote.fQuote.Author.__str__(),
             "day": DailyQuote.day,
+            "bg": DailyQuote.fQuote.Background,
             "shareurl": DailyQuote.surl
         }
         if raw:
@@ -81,7 +83,7 @@ def SSIMView(request, shareurl = False):
                 dlink = "static/%s.png" %shareurl
             else: 
                 QB = ShareView(request, shareurl=shareurl, raw=True)
-                dlink = imgr.ImageRun(QB["day"],QB["quote"], QB["author"].__str__(), QB["shareurl"]) 
+                dlink = imgr.ImageRun(QB["day"],QB["quote"], QB["author"].__str__(), QB["shareurl"], QB["bg"]) 
             return JsonResponse({"downloadlink" : dlink}, headers= {
                     "Access-Control-Allow-Origin" : "*",
                     "Access-Control-Allow-Credentials" : "true",

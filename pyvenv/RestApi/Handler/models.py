@@ -14,10 +14,18 @@ class Quote (models.Model):
     quote = models.CharField(verbose_name="quote", max_length=400)
     Author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
+    BACKGROUND_CHOICES = [
+        ("1.jpg", "diamond"),
+        ("2.jpg", "heart"),
+        ("3.jpg", "round"),
+    ]
+    Background = models.CharField(verbose_name="bg-image", choices=BACKGROUND_CHOICES, max_length=6, default="1.jpg")
+
 class QuoteBank (models.Model):
     day = models.DateField(verbose_name="date")
     fQuote = models.ForeignKey(Quote, on_delete=models.CASCADE)
     surl = models.SlugField(verbose_name="share-url", unique=True, max_length=4, default="1111")
 
+    
 class State (models.Model):
     shareurl = models.SlugField(verbose_name="surl_state", max_length=4, default="1111")

@@ -16,7 +16,8 @@ structure:
     "quote": "String",
     "author": "String",
     "day": "String",
-    "shareurl": "String"
+    "shareurl": "String",
+    "bg": "String"
 }
 ```
 ------
@@ -36,7 +37,8 @@ structure:
     "quote": "String",
     "author": "String",
     "day": "String",
-    "shareurl": "String"
+    "shareurl": "String",
+    "bg": "String"
 }
 ```
 

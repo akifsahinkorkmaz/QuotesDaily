@@ -107,9 +107,9 @@ def AuthFontRule(text):
 
 
 # Image Creater -
-def ImageRun(date, quote, author, imu, img=1):
+def ImageRun(date, quote, author, imu, img="1.jpg"):
     try:
-        img = Image.open("%s%d.jpg" %(real_path, img))
+        img = Image.open("%s%s" %(real_path, img))
         imc = ImageDraw.Draw(img)
         imc.text((330,280), str(date), (0,0,0), anchor="ms", align="center" , font= Font(32)) 
         quote_dict = FontRule(str(quote))
