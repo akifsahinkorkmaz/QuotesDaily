@@ -87,7 +87,7 @@ class Home extends React.Component <propTypes, stateTypes> {
         </div>
         
         <div className='absolute bottom-8 right-4 space-y-4'>
-          <a className='block text-white text-center mw-36 h-8 rounded-full bg-green-400 px-3 pt-px shadow-sm' href={"http://localhost:8000/static/" + this.state.Surl.split("/").pop()+ ".png"} download={"QuotesDaily-"+ this.state.Day} >Download from servers</a>
+          <a className='block text-white text-center mw-36 h-8 rounded-full bg-green-400 px-3 pt-px shadow-sm' href={apiurl + "static/download/" + this.state.Surl.split("/").pop()+ ".png"} download={"QuotesDaily-"+ this.state.Day} >Download from servers</a>
           <Copy url={this.state.Surl}></Copy>
         </div>
         

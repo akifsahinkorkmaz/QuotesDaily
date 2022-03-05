@@ -80,7 +80,7 @@ def SSIMView(request, shareurl = False):
     if shareurl:
         try:
             if imgr.ImageGet(shareurl):
-                dlink = "static/%s.png" %shareurl
+                dlink = "static/download/%s.png" %shareurl
             else: 
                 QB = ShareView(request, shareurl=shareurl, raw=True)
                 dlink = imgr.ImageRun(QB["day"],QB["quote"], QB["author"].__str__(), QB["shareurl"], QB["bg"]) 
@@ -94,4 +94,5 @@ def SSIMView(request, shareurl = False):
             return HttpResponse(status = 500)
     else:
         return HttpResponse(status = 404)
+
     

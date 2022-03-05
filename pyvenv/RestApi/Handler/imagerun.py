@@ -4,7 +4,7 @@ from os import path
 # Lambdas -
 real_path = "C:\\Users\\akifs\\Desktop\\QuotesDaily\\pyvenv\\RestApi\\static\\"
 Font = lambda x : ImageFont.truetype("C:\\Users\\akifs\\Desktop\\QuotesDaily\\pyvenv\\RestApi\\Handler\\NotoSerif-Regular.ttf", size=x)
-ImageGet = lambda imu : True if path.isfile("%s/%s.jpg" %(real_path, imu)) else False
+ImageGet = lambda imu : True if path.isfile("%s\\download\\%s.png" %(real_path, imu)) else False
 
 
 # Font Rule -
@@ -115,8 +115,8 @@ def ImageRun(date, quote, author, imu, img="1.jpg"):
         quote_dict = FontRule(str(quote))
         imc.text((330,550), quote_dict["text"], (0,0,0), anchor="mm", align="center", font= Font(int(quote_dict["font"]))) 
         imc.text((330,830), str(author), (0,0,0), anchor="ms", align="center", font= Font(AuthFontRule(str(author)))) 
-        img.save("%s%s.png" %(real_path, imu))
-        return "static/%s.png" %(imu)
+        img.save("%s\\download\\%s.png" %(real_path, imu))
+        return "static\\download\\%s.png" %(imu)
     except:
         return False
 
