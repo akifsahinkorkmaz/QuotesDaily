@@ -60,6 +60,6 @@ structure:
 }
 
 ```
-example download link: "static/1113.png"
+example download link: "static/download/1113.png"
 
 ------
