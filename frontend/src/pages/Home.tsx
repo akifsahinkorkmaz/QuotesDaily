@@ -16,6 +16,7 @@ interface stateTypes {
   Surl: string,
   Bg: string,
   Font: number,
+  Imurl?: string,
 }
 
 class Home extends React.Component <propTypes, stateTypes> {
@@ -36,6 +37,7 @@ class Home extends React.Component <propTypes, stateTypes> {
       Surl: "",
       Bg: (apiurl + "static/1.jpg"),
       Font: 12,
+      Imurl: "",
     }
   }
 
@@ -57,6 +59,19 @@ class Home extends React.Component <propTypes, stateTypes> {
         Surl: apiurl + result.shareurl,
         Bg: result.Bg ? apiurl + "static/" + result.Bg : this.state.Bg,
       })); 
+    localurl = localurl + "ssim/" + this.state.Surl.split("/").pop() 
+    fetch(localurl, {
+        method: 'GET', 
+        mode: 'cors', 
+        cache: 'no-cache', 
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    })
+    .then((res) => res.json())
+    .then(result => this.setState({
+          Imurl: result.downloadlink
+    })); 
 
     var l: number = this.state.Quote.length
     var f: number = 0;
@@ -87,7 +102,7 @@ class Home extends React.Component <propTypes, stateTypes> {
         </div>
         
         <div className='absolute bottom-8 right-4 space-y-4'>
-          <a className='block text-white text-center mw-36 h-8 rounded-full bg-green-400 px-3 pt-px shadow-sm' href={apiurl+ "static/download/" + this.state.Surl.split("/").pop()+ ".png"} download={"QuotesDaily-"+ this.state.Day + ".png"} >Download from servers</a>
+          <a className='block text-white text-center mw-36 h-8 rounded-full bg-green-400 px-3 pt-px shadow-sm' href={this.state.Imurl} >Download from servers</a>
           <Copy url={this.state.Surl}></Copy>
         </div>
         
