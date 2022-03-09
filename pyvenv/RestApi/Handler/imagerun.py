@@ -18,7 +18,7 @@ def ImageMake(date, printable, author, afont, qfont, imu, img="1.jpg"):
         imc.text((330,280), str(date), (0,0,0), anchor="ms", align="center" , font= Font(32)) 
         imc.text((330,550), printable, (0,0,0), anchor="mm", align="center", font= Font(qfont)) 
         imc.text((330,830), str(author), (0,0,0), anchor="ms", align="center", font= Font(afont)) 
-        imc.text((1000,1000), (settings.FRONTURL + imu), (0,0,0), anchor="rs", align="left", font= Font(10)) 
+        imc.text((1000,1020), (settings.FRONTURL + imu), (0,0,0), anchor="rs", align="right", font= Font(16)) 
         img.save("%s\\download\\%s.png" %(static_path, imu))
         return "static/download/%s.png" %(imu)
     except:

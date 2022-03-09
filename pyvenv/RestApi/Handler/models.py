@@ -12,10 +12,10 @@ class Author (models.Model):
 
 
 class Quote (models.Model):
-    quote = models.CharField(verbose_name="quote", max_length=300)
+    quote = models.TextField(verbose_name="quote", max_length=300)
     Author = models.ForeignKey(Author, on_delete=models.CASCADE)
     
-    printable = models.CharField(verbose_name="printable-quote", max_length=400)
+    printable = models.TextField(verbose_name="printable-quote", max_length=400)
     qfont = models.IntegerField("quote-font", default=16)
     afont = models.IntegerField("author-font", default=16)
 

@@ -44,7 +44,7 @@ class Copy extends React.Component <propTypes, stateTypes> {
     return (
      
       <div className=' relative w-min pr-20'>
-        <h1 className='mw-48 h-8 rounded-l-full bg-slate-50 px-3 pt-px shadow-sm'>{this.props.url}</h1>
+        <h1 className='w-auto h-8 rounded-l-full bg-slate-50 px-3 pt-px shadow-sm'>{this.props.url}</h1>
         <button className='absolute top-0 right-0 text-white w-20 h-8 rounded-r-full shadow-sm transition' style={this.state.copystyle} onClick={this.CopyButton.bind(this)}>{this.state.copystatus}</button>
       </div>
   
