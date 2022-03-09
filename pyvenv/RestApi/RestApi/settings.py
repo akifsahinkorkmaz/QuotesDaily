@@ -46,6 +46,8 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
 ]
 
+FRONTURL = "http://localhost:3000/"
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
     ("download" , os.path.join(os.path.join(BASE_DIR, 'static'), 'download')),
