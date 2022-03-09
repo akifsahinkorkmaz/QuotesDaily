@@ -1,5 +1,5 @@
-from pickle import TRUE
 from django.db import models
+from . import textrules as trl
 
 # Declaration index matters !
 
@@ -10,9 +10,14 @@ class Author (models.Model):
     def __str__(self) -> str:
         return "%s %s" %(self.name, self.surname)
 
+
 class Quote (models.Model):
-    quote = models.CharField(verbose_name="quote", max_length=400)
+    quote = models.CharField(verbose_name="quote", max_length=300)
     Author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    
+    printable = models.CharField(verbose_name="printable-quote", max_length=400)
+    qfont = models.IntegerField("quote-font", default=16)
+    afont = models.IntegerField("author-font", default=16)
 
     BACKGROUND_CHOICES = [
         ("1.jpg", "diamond"),
@@ -20,6 +25,15 @@ class Quote (models.Model):
         ("3.jpg", "round"),
     ]
     Background = models.CharField(verbose_name="bg-image", choices=BACKGROUND_CHOICES, max_length=6, default="1.jpg")
+
+    def save(self, *args, **kwargs) -> None:
+        # Get printing options
+        self.afont = trl.AuthFontRule(self.Author.__str__())
+        q = trl.TextFormatting(self.quote)
+        self.qfont = q["font"]
+        self.printable = q["text"]
+        super(Quote, self).save(*args, **kwargs)
+
 
 class QuoteBank (models.Model):
     day = models.DateField(verbose_name="date")

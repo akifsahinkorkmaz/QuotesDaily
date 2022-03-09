@@ -48,7 +48,7 @@ CORS_ALLOWED_ORIGINS = [
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-    ("download" , os.path.join(BASE_DIR, 'static/download')),
+    ("download" , os.path.join(os.path.join(BASE_DIR, 'static'), 'download')),
 ]
 
 MIDDLEWARE = [

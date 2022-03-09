@@ -8,6 +8,9 @@ from .models import Quote, Author, QuoteBank, State
 from . import imagerun as imgr
 
 def SetDynamicUrl() -> str:
+    """
+        Updates state and generates unique dynamic url 
+    """
     state = State.objects.get()
     result = hex(int(state.shareurl, base=16) + 1)[2:]
     state.shareurl = result
@@ -23,8 +26,8 @@ def DailyView(request, raw = False) -> Dict:
                 * Creates new DaiyQuote (QuoteBank object).
                 * Returns as instructed below:
 
-        * If raw = False (default) returns (django) JsonResponse as {quote: Quote, author: Author, day=datetime.date.today}.
-        * If raw = True returns Dict as {quote: Quote, author: Author, day=datetime.date.today}.
+        * If raw = False (default) returns (django) JsonResponse as {quote: Quote, author: Author, day=datetime.date.today, printables...}.
+        * If raw = True returns Dict as {quote: Quote, author: Author, day=datetime.date.today, printables...}.
     """    
     Day = datetime.date.today()
     try: 
@@ -41,8 +44,12 @@ def DailyView(request, raw = False) -> Dict:
         "quote": DailyQuote.fQuote.quote,
         "author": DailyQuote.fQuote.Author.__str__(),
         "day": DailyQuote.day,
+        "shareurl": DailyQuote.surl,
+
+        "printable" : DailyQuote.fQuote.printable ,
+        "afont" : DailyQuote.fQuote.afont ,
+        "qfont" : DailyQuote.fQuote.qfont ,
         "bg": DailyQuote.fQuote.Background,
-        "shareurl": DailyQuote.surl
     }
     if raw:
         return Response
@@ -55,14 +62,24 @@ def DailyView(request, raw = False) -> Dict:
         })
 
 def ShareView(request, shareurl, raw=False):
+    """
+        This function returns and Daily Quotes by share url.
+
+        * If raw = False (default) returns (django) JsonResponse as {quote: Quote, author: Author, day=datetime.date.today, printables...}.
+        * If raw = True returns Dict as {quote: Quote, author: Author, day=datetime.date.today, printables...}.
+    """  
     try: 
         DailyQuote = QuoteBank.objects.get(surl = shareurl)
         Response = {
             "quote": DailyQuote.fQuote.quote,
             "author": DailyQuote.fQuote.Author.__str__(),
             "day": DailyQuote.day,
+            "shareurl": DailyQuote.surl,
+
+            "printable" : DailyQuote.fQuote.printable ,
+            "afont" : DailyQuote.fQuote.afont ,
+            "qfont" : DailyQuote.fQuote.qfont ,
             "bg": DailyQuote.fQuote.Background,
-            "shareurl": DailyQuote.surl
         }
         if raw:
             return Response
@@ -79,11 +96,11 @@ def ShareView(request, shareurl, raw=False):
 def SSIMView(request, shareurl = False):
     if shareurl:
         try:
-            if imgr.ImageGet(shareurl):
+            if imgr.ImageCheck(shareurl):
                 dlink = "static/download/%s.png" %shareurl
             else: 
                 QB = ShareView(request, shareurl=shareurl, raw=True)
-                dlink = imgr.ImageRun(QB["day"],QB["quote"], QB["author"].__str__(), QB["shareurl"], QB["bg"]) 
+                dlink = imgr.ImageMake(QB["day"],QB["printable"], QB["author"].__str__(), QB["afont"], QB["qfont"] , QB["shareurl"], QB["bg"]) 
             return JsonResponse({"downloadlink" : dlink}, headers= {
                     "Access-Control-Allow-Origin" : "*",
                     "Access-Control-Allow-Credentials" : "true",
