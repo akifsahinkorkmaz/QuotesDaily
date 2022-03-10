@@ -17,7 +17,11 @@ structure:
     "author": "String",
     "day": "String",
     "shareurl": "String",
-    "bg": "String"
+    
+    "printable": "String",
+    "qfont": 16,
+    "afont": 16,
+    "bg": "String",
 }
 ```
 ------
@@ -38,7 +42,11 @@ structure:
     "author": "String",
     "day": "String",
     "shareurl": "String",
-    "bg": "String"
+    
+    "printable": "String",
+    "qfont": 16,
+    "afont": 16,
+    "bg": "String",
 }
 ```
 
@@ -61,5 +69,15 @@ structure:
 
 ```
 example download link: "static/download/1113.png"
+
+------
+
+## Image Download:
+
+url: "/static/download/< slug: share - link >.png" 
+
+example url: "api.com/static/download/1113.png"  
+
+content: Image | 404 error | 500 error
 
 ------

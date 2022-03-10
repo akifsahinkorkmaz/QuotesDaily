@@ -23,7 +23,6 @@ class Canvas extends React.Component <propTypes, stateTypes> {
   constructor (props: propTypes) {
     super(props)
     this.canvas = React.createRef();
-    this.state = {    }
   }
 
 
