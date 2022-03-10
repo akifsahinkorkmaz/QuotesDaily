@@ -15,13 +15,15 @@ interface stateTypes {
   Author: string,
   Day: string,
   Surl: string,
-  FontRules: object,
   Bg: string,
+
   AFont: number,
   QFont: number,
   Printable: string,
-  Imurl?: string,
-  Canvurl?: string | boolean,
+
+  CanvGet : boolean, 
+  Canvurl: string ,
+  Imurl: string,
 }
 
 class Home extends React.Component <propTypes, stateTypes> {
@@ -34,14 +36,18 @@ class Home extends React.Component <propTypes, stateTypes> {
       Author: "",
       Day: "",
       Surl: "",
-      FontRules: {},
       Bg: (apiurl + "static/1.jpg"),
+
       QFont: 16,
       AFont: 20,
       Printable: "",
+      
+      CanvGet : false,
       Imurl: "",
-      Canvurl: false,
+      Canvurl: "",
     }
+    this.setState = this.setState.bind(this);
+    this.SetImage = this.SetImage.bind(this);
   }
 
   componentDidMount(){
@@ -85,22 +91,29 @@ class Home extends React.Component <propTypes, stateTypes> {
         })
       }
     );
-  
   }
 
-  GetImage() {
-    var that = this;
-    return that.setState
+  SetImage(data: string) {
+    this.setState({
+      Canvurl: data
+    });
   }
 
-  GenerateImage() {
-    this.setState({Canvurl : true})
+  SetCanvas() {
+    if (this.state.CanvGet){
+      return (
+        <div className='hidden'>
+          <Canvas SetImage={this.SetImage.bind(this)} Author={this.state.Author} Day={this.state.Day} Surl={this.state.Surl} Afont={this.state.AFont} Qfont={this.state.QFont} Printable={this.state.Printable} Bg={this.state.Bg}/>
+        </div>
+      )
+    }
+    
   }
+
   
   render(): ReactElement {
     return (
     
-      
       <main className='w-screen h-screen bg-slate-200'>
         <div className='absolute text-center top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4'>
           <h1 className='absolute top-[25%] left-[32%] -translate-x-2/4 -translate-y-2/4' >{this.state.Day}</h1>
@@ -110,19 +123,18 @@ class Home extends React.Component <propTypes, stateTypes> {
         </div>
         
         <div className='absolute bottom-8 right-4 space-y-4'>
-          <button className='w-full h-8' onClick={this.GenerateImage.bind(this)}> 
-            <p className={this.state.Canvurl ? "hidden" : "block text-white text-center h-8 rounded-full bg-orange-400 px-3 pt-px shadow-sm"}>Generate image locally</p>
-            <a className={!this.state.Canvurl ? "hidden" : "block text-white text-center  h-8 rounded-full bg-green-400 px-3 pt-px shadow-sm"} href={typeof(this.state.Canvurl) == 'string' ? this.state.Canvurl : "/"}> Get image </a> 
+          <button className='w-full h-8' onClick={_ => {this.setState({CanvGet : true})}}> 
+            <p className={this.state.CanvGet ? "hidden" : "block text-white text-center h-8 rounded-full bg-orange-400 px-3 pt-px shadow-sm"}>Generate image locally</p>
+            <a className={!this.state.CanvGet ? "hidden" : "block text-white text-center  h-8 rounded-full bg-green-400 px-3 pt-px shadow-sm"} download href={this.state.Canvurl}> Get image </a> 
           </button>
           <a className='block w-full text-white text-center h-8 rounded-full bg-green-400 px-3 pt-px shadow-sm' href={this.state.Imurl ? this.state.Imurl : apiurl + "static/download/" + this.state.Surl.split("/").pop() + ".png"  } >Download from servers</a>
           <Copy url={this.state.Surl}></Copy>
         </div>
-        
-        <div className='hidden'>
-          <Canvas GetImage={!this.state.Canvurl ? false : this.GetImage.bind(this)} Quote={this.state.Quote} Author={this.state.Author} Day={this.state.Day} Surl={this.state.Surl} Afont={this.state.AFont} Qfont={this.state.QFont} Printable={this.state.Printable} Bg={this.state.Bg}/>
-        </div>
-    
+
+        {this.SetCanvas()}
       </main>
+
+
     
     );
   }
