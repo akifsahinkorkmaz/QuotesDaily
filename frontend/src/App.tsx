@@ -1,5 +1,3 @@
-import React from 'react';
-import logo from './logo.svg';
 import {
   Routes,
   Route,
@@ -10,6 +8,7 @@ import Home from './pages/Home';
 function App() {
   return (
     <Routes>
+      <Route path='/:shareurl'  element={<Home />}/>
       <Route path=''  element={<Home />}/>
     </Routes>
   );

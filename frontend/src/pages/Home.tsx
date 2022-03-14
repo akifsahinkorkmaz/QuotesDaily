@@ -1,10 +1,15 @@
-import React, { ReactComponentElement, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import '../App.css';
 import Canvas from '../components/Canvas';
 import Copy from '../components/Copy';
 import Background from '../components/Background';
 import {apiurl} from '../App';
+import { useParams } from 'react-router-dom';
 
+function Home(){
+  let {shareurl} = useParams()
+  return <Homex shared={shareurl ? shareurl : ""}/>
+}
 
 interface propTypes {
   shared?: string,
@@ -26,7 +31,7 @@ interface stateTypes {
   Imurl: string,
 }
 
-class Home extends React.Component <propTypes, stateTypes> {
+class Homex extends React.Component <propTypes, stateTypes> {
   quotestyle: any;
   constructor (props: propTypes) {
     super(props);
@@ -51,7 +56,10 @@ class Home extends React.Component <propTypes, stateTypes> {
   }
 
   componentDidMount(){
-    var localurl: string = apiurl 
+    var localurl: string = this.props.shared ? apiurl + this.props.shared : apiurl
+
+    console.log(localurl);
+    
     fetch(localurl, {
           method: 'GET', mode: 'cors', cache: 'no-cache', 
           headers: {'Content-Type': 'application/json'}
