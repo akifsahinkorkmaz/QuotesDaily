@@ -3,7 +3,7 @@ import '../App.css';
 import Canvas from '../components/Canvas';
 import Copy from '../components/Copy';
 import Background from '../components/Background';
-import {apiurl} from '../App';
+import {apiurl, baseurl} from '../App';
 import { useParams } from 'react-router-dom';
 
 function Home(){
@@ -68,7 +68,7 @@ class Homex extends React.Component <propTypes, stateTypes> {
         Quote: result.quote,
         Author: result.author,
         Day: result.day, 
-        Surl: apiurl + result.shareurl,
+        Surl: baseurl + result.shareurl,
         AFont : result.afont,
         QFont : result.qfont,
         Printable : result.printable,
